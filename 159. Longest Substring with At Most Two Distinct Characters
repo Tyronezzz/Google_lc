@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int lengthOfLongestSubstringTwoDistinct(string s) {
+        int begin=0, end=0;
+        unordered_map<char, int> umap;
+        int count=2, dis = 0;
+        
+        
+        
+        while(end<s.size())
+        {
+            umap[s[end]]++;
+            
+            if(umap[s[end++]] == 1)
+                count--;
+            
+            while(count<0)
+            {
+                umap[s[begin]]--;
+                if(umap[s[begin++]] == 0)
+                    count++;
+                
+            }
+            dis = max(dis, end-begin);
+            
+        }
+        
+        return dis;
+        
+    }
+    
+    
+//     char lastch='0', secondch = '0';
+//         int lastcount=0, maxnum=0, curnum=0;
+        
+//         for(char ch:s)
+//         {
+//             if(ch == lastch || ch == secondch)
+//             {
+//                 curnum++;
+//             }
+            
+//             else
+//             {
+//                 curnum = lastcount+1;
+                
+//             }
+            
+//             if(ch == lastch)
+//                 lastcount++;
+            
+//             else
+//             {
+//                 lastcount = 1;
+//                 secondch = lastch;
+//                 lastch = ch;
+//             }
+                
+            
+//             maxnum = max(maxnum, curnum);
+//         }
+        
+//         return maxnum;
+    
+};

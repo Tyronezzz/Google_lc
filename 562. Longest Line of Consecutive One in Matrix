@@ -1,0 +1,54 @@
+class Solution {
+public:
+    
+    int longestLine(vector<vector<int>>& M) {
+        if (M.size() == 0 || M[0].size() == 0) return 0;
+        int result=0;
+        int cur=0;
+        
+        for(int i=0;i<M.size();i++, cur=0)
+        {
+            for(int j=0;j<M[0].size();j++)
+            {
+                cur = M[i][j]==1? cur+1: 0;
+                result = max(cur, result);
+            }  
+        }
+        
+        
+        for(int j=0;j<M[0].size();j++,cur=0)
+        {
+            for(int i=0;i<M.size();i++)
+            {
+                cur = M[i][j]==1? cur+1: 0;
+                result = max(cur, result);
+            }
+            
+        }
+        
+        int m = M.size(), n=M[0].size();
+        
+        int anti =0, diag=0;
+        for(int k=0;k<m+n;k++, anti =0, diag=0)
+        {
+            for(int i=min(m-1, k), j=max(k-m, 0); i>=0&& j<n;i--,j++)  //anti
+            {
+                anti = M[i][j]==1? anti+1: 0;
+                result = max(anti, result);        
+            }
+            
+            for(int i=max(m-1-k, 0), j = max(0, k-m);i<m&&j<n;i++, j++)
+            {
+                diag = M[i][j]==1? diag+1: 0;
+                result = max(diag, result);
+            }
+            
+        }
+        
+        
+        return result;
+    }
+    
+    
+    
+};

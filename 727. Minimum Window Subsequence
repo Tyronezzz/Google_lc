@@ -1,0 +1,46 @@
+class Solution {
+public:
+    string minWindow(string S, string T) {
+        
+        int start=-1, end=0;
+        int ss=0, ts=0;
+
+        int result=INT_MAX;
+        
+        while(ss<S.size())
+        {
+            if(S[ss] == T[ts])
+            {
+                ts++;
+                if(ts==T.length())
+                {
+                    end = ss;
+                    ts--;
+                    while(ts>=0)
+                    {
+                        while(S[ss]!=T[ts])
+                        {
+                            ss--;
+                        }
+                        ss--;
+                        ts--;
+                    } 
+                    ss++;
+                    ts++;
+                   
+                    if(end - ss+1 < result)
+                    {
+                        result = end - ss+1;
+                        start= ss;
+                    }
+                    
+                } 
+            }
+            
+            ss++;
+        }
+        
+        return start==-1? "": S.substr(start, result);
+        
+    }
+};

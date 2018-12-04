@@ -1,0 +1,82 @@
+class Solution {
+public:
+    bool canTransform(string start, string end) {
+        
+        int n = start.size();
+        int i=0, j=0;
+        
+        while(i<n && j<n)
+        {
+            while(i<n && start[i]=='X') i++;
+            while(j<n && end[j]=='X') j++;
+            
+            if((i<n) ^ (j<n))
+                return false;
+            
+            if(i<n && j<n)
+            {
+                if((start[i] !=end[j]) || (start[i] == 'L' && i<j) || (start[i]=='R' && i>j))
+                    return false;   
+            }    
+            
+            i++;
+            j++;
+        }
+        
+        return true;
+        
+//         int index=0;
+//         string news = start, newe = end;
+        
+//         for(int i=0;i<news.size();i++)
+//         {
+//             if(news[i] != 'X')
+//             {
+//                 news[index++] = news[i];
+//             }
+//         }
+        
+//         string ns = news.substr(0, index);
+       
+//         index=0;
+//         for(int j=0;j<newe.size();j++)
+//         {
+//              if(newe[j] != 'X')
+//             {
+//                 newe[index++] = newe[j];
+//             }  
+//         }
+//         string ne = newe.substr(0 ,index);
+        
+        
+        
+//         if(ns != ne) return false;
+        
+//         index=0;
+//         for(int i=0;i<start.size();i++)
+//         {
+//             if(start[i] == 'L')
+//             {
+                
+//                 while(end[index]!= 'L') index++;
+//                 if(i<index++)    
+//                     return false;       
+//             }    
+//         }
+        
+//         index=0;
+//         for(int i=0;i<start.size();i++)
+//         {
+//             if(start[i] == 'R')
+//             {
+//                 while(end[index]!= 'R') index++;
+//                 if(i>index++)    
+//                     return false;
+//             }    
+//         }
+        
+//         return true;
+        
+        
+    }
+};

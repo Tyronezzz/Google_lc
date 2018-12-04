@@ -1,0 +1,86 @@
+class Solution {
+public:
+    int dirs[4][2] = {{1,0}, {0,1},{0,-1},{-1,0}};
+    
+    vector<int> hitBricks(vector<vector<int>>& grid, vector<vector<int>>& hits) {
+        
+        //cout<<dirs[3][1]<<endl;
+        
+        vector<int> result(hits.size(), 0);
+        if(grid.size()==0) return result;
+        
+        for(auto hit:hits)
+        {
+            grid[hit[0]][hit[1]]--;    // 0->-1, 1->0
+        }
+        
+       
+        
+        for(int i=0;i<grid[0].size();i++)
+        {
+            cout<<i<<endl;
+            dfs(0, i, grid);
+        }
+            
+        
+        
+        cout<<"hh"<<endl;
+        for(int k=hits.size()-1;k>=0;k--)
+        {
+            auto hit = hits[k];
+            int i = hit[0], j = hit[1];
+            grid[i][j]++;
+            
+            if(grid[i][j] ==1 && connected(i, j, grid) )
+            {
+                result[k] = dfs(i, j, grid) -1;
+            }
+            
+        }
+        return result;
+        
+    }
+    
+    
+    
+    
+    int dfs(int row, int col, vector<vector<int>>& grid)
+    {
+        
+        if((grid[row][col] !=1 ) || row <0 || row>=grid.size() || col<0 || col>=grid[0].size())    //
+            return 0;
+        
+        grid[row][col] =2;
+        int sum=1;
+        
+        for(auto dir:dirs)
+        {
+            int i = row + dir[0];
+            int j = col + dir[1];
+            //cout<<i<<" "<<j<<endl;
+            sum += dfs(i, j, grid);
+        }
+        
+        cout<<sum<<endl;
+        return sum;
+    }
+    
+    
+    bool connected(int row, int col, vector<vector<int>>& grid)
+    {
+        if(row==0) return true;
+        
+        for(auto dir:dirs)
+        {
+            int i = row + dir[0];
+            int j = col + dir[1];
+            if(i <0 || i>=grid.size() || j<0 || j >=grid[0].size())
+                continue;
+            if(grid[i][j] == 2)
+                return true;
+        }
+        
+        return false;
+    }
+    
+};

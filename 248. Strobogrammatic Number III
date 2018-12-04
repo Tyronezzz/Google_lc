@@ -1,0 +1,44 @@
+class Solution {
+public:
+    
+    int result=0;
+    vector<vector<char>> pairs = {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
+    
+    int strobogrammaticInRange(string low, string high) {
+        
+        for(int i=low.size();i<=high.size();i++)
+        {
+            string c(i, '0');
+            dfs(c, 0, i-1, low, high);
+        }
+        
+        return result;
+    }
+    
+    void dfs(string &c, int left, int right, string low, string high)
+    {
+        if(left>right)
+        {      
+            if((c.size() == low.size() && c.compare(low)<0) || ( c.size() == high.size() && c.compare(high)>0 )) 
+                return;        
+                    
+            result++;
+            return;
+        }
+        
+        for(auto pr:pairs)
+        {
+            c[left] = pr[0];
+            c[right] = pr[1];
+           
+            
+            if(c[0] == '0' && c.size()!=1)
+                continue;
+            
+            if(left < right || (left == right && pr[0] == pr[1]))
+                dfs(c, left+1, right-1, low, high);
+            
+        }
+    }
+    
+};

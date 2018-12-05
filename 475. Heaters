@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+     
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+        
+        int result = INT_MIN;
+        
+        for(int house:houses)
+        {
+            int pos = upper_bound(heaters.begin(), heaters.end(), house) - heaters.begin();
+            cout<<pos<<endl;
+            
+            int left = pos>=1? house- heaters[pos-1]:INT_MAX; 
+            int right = pos<heaters.size()? heaters[pos]-house: INT_MAX;
+            
+            result = max(result, min(left, right));                   
+        }
+        
+        return result;
+    }
+};

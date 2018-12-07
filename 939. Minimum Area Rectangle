@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int minAreaRect(vector<vector<int>>& points) {
+     
+        map<int, set<int>> mp;
+        
+        for(int i=0;i<points.size();i++)
+        {
+            mp[points[i][0]].insert(points[i][1]);
+        }
+        
+        
+        int area=INT_MAX;
+        
+        for(auto p1:points)
+        {
+            for(auto p2:points)
+            {
+                if(p1[0] == p2[0] || p1[1]==p2[1])
+                    continue;
+                
+                if(mp[p1[0]].count(p2[1]) && mp[p2[0]].count(p1[1]))
+                    area = min(area, abs((p2[0] - p1[0]) * (p2[1] - p1[1])));
+                
+            }
+        }
+    
+        return area == INT_MAX? 0: area;
+        
+        
+    }
+};

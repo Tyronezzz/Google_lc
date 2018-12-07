@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int rectangleArea(vector<vector<int>>& rectangles) {
+        if(rectangles.empty()) return 0;
+        
+        set<int> xcor;
+        map<int, vector<vector<int>>> height;   // height  h0: {{1/-1, left, right}, {...}}
+        
+        for(auto rectangle: rectangles)
+        {
+            xcor.insert(rectangle[0]);
+            xcor.insert(rectangle[2]);
+            height[rectangle[1]].push_back({1, rectangle[0], rectangle[2]});
+            height[rectangle[3]].push_back({-1, rectangle[0], rectangle[2]});
+        }
+        
+        vector<int> xcorindex(xcor.begin(), xcor.end());   // x;
+        int index=0;
+        unordered_map<int, int> Xi;   // Xi: x ->index;
+        for(auto x:xcor)
+            Xi[x] = index++;
+        
+        long long preh = (height.begin())->first;
+        long long curx=0, modi = pow(10, 9)+7, area=0;
+        
+        vector<int> count(xcor.size(), 0);  //  [,)
+        for(auto h:height)
+        {
+            int curh = h.first;
+            area = (area + (curh - preh)*curx)%modi;
+            
+            for(auto p:h.second)
+            {
+                int sign = p[0], l=p[1], r=p[2];
+                for(int i=Xi[l]; i<Xi[r];i++)
+                    count[i] += sign;
+            }
+            
+            curx=0;
+            for(int i=0;i<count.size();i++)
+            {
+                if(count[i])
+                {
+                    curx += xcorindex[i+1] - xcorindex[i];
+                }
+                //cout<<count[i]<<endl;
+                
+            }
+            preh = curh;
+            cout<<area<<endl;
+        }
+        
+        
+        return area;
+        
+    }
+};

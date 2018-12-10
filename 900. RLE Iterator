@@ -1,0 +1,51 @@
+class RLEIterator {
+public:
+    
+    vector<int> iterA;
+    int index;
+    
+    RLEIterator(vector<int> A) {
+        // for(int i=0;i<A.size();i+=2)
+        // {
+        //     if(i+1<A.size())
+        //     {
+        //         for(int j=0;j<A[i];j++)
+        //             iterA.push_back(A[i+1]);
+        //     }    
+        // }
+        
+        this->iterA = A;
+        index =0;
+        
+    }
+    
+    int next(int n) {
+        while(n>iterA[index] && index<iterA.size())
+        {
+            n -= iterA[index];
+            index += 2;
+        }
+        
+        if(index>=iterA.size())
+            return -1;
+        
+        iterA[index] -= n;
+            return iterA[index+1];
+        
+//         if(p+n>=iterA.size())
+//         {
+//             p = iterA.size();
+//             return -1;
+//         }
+        
+//         p += n;
+//         return iterA[p];
+        
+    }
+};
+
+/**
+ * Your RLEIterator object will be instantiated and called as such:
+ * RLEIterator obj = new RLEIterator(A);
+ * int param_1 = obj.next(n);
+ */

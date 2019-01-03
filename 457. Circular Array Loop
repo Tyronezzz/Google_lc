@@ -55,3 +55,60 @@ public:
     }
     
 };
+
+
+
+
+
+
+class Solution {
+public:
+    int size;
+    
+    bool circularArrayLoop(vector<int>& nums) {
+        size = nums.size();
+        if(size<=1) return false;
+        
+        for(int i=0;i<size;i++)
+        {
+            if(nums[i] == 0)
+                continue;
+            
+            int j=i, k = goskip(i, nums);
+            while(nums[i] * nums[k]>0 && nums[i] * nums[goskip(k, nums)] >0)
+            {
+                if(j == k)
+                {
+                    if(j == goskip(j, nums))
+                        break;
+                    return true;
+                }
+                
+                j = goskip(j, nums);
+                k = goskip(goskip(k, nums), nums);
+            }
+            
+            j = i;
+            int val = nums[i];
+            while(val *nums[j]>0)
+            {
+                nums[j]=0;
+                j = goskip(j, nums);
+            }
+        }
+        
+        return false;
+    }
+    
+    int goskip(int i, vector<int>& nums)
+    {
+        i += nums[i];
+        if(i>=size)
+            return i%size;
+        else if(i<0)
+            return i%size + size;
+           
+        return i;
+    }
+    
+};

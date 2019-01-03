@@ -1,0 +1,57 @@
+class Solution {
+public:
+    
+    int size;
+
+    bool circularArrayLoop(vector<int>& nums) {
+        size = nums.size();
+        if(size<=1) return false;
+        
+        
+        for(int i=0;i<nums.size();i++)
+        {
+            
+            bool frwd = (nums[0]>0);
+            int slow = i, fast = i;
+            
+            do
+            {
+                for(int j=0;j<2;j++)
+                {
+                    if(checkdir(frwd, nums[fast]))
+                        return false;
+                    fast = goskip(fast, nums, frwd);
+                }
+
+                slow = goskip(slow, nums, frwd);   
+            }
+            while(slow!=fast);
+            
+            if(slow == goskip(slow, nums, frwd))
+                continue;
+            
+            else
+                return true;
+        }
+        
+        return false;
+    }
+
+    
+    bool checkdir(bool frwd, int num)
+    {
+        return (frwd && num<=0 || !frwd && num>=0);   
+    }
+    
+    int goskip(int i, vector<int>& nums, bool frwd)
+    {
+        i += nums[i];
+        if(frwd && i>=size)
+            return i%size;
+        else if(i<0 && !frwd)
+            return i%size + size;
+           
+        return i;
+    }
+    
+};

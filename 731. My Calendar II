@@ -1,0 +1,33 @@
+class MyCalendarTwo {
+public:
+    MyCalendarTwo() {
+        
+    }
+    
+    vector<pair<int, int >> checking;
+    vector<pair<int, int >> overlaps;
+    
+    bool book(int start, int end) {
+        
+        for(int i=0;i<overlaps.size();i++)
+        {
+            if(start < overlaps[i].second && end > overlaps[i].first)
+                return false;
+        }
+        
+        for(int i=0;i<checking.size();i++)
+        {
+            if(start < checking[i].second && end > checking[i].first)
+                overlaps.push_back({max(start, checking[i].first), min(checking[i].second, end)});
+        }
+        
+        checking.push_back({start, end});
+        return true;
+    }
+};
+
+/**
+ * Your MyCalendarTwo object will be instantiated and called as such:
+ * MyCalendarTwo obj = new MyCalendarTwo();
+ * bool param_1 = obj.book(start,end);
+ */
